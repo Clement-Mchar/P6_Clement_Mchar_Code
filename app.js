@@ -7,10 +7,11 @@ mongoose
 	.connect(
 		"mongodb+srv://Geno77:CXnuXixQ7fmIWOvW@cluster0.yzgpk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 		{
+            useNewUrlParser: true,
 			useUnifiedTopology: true,
 		}
 	)
-	.then(() => console.log("Connexion à MongoDB réussie !"))
+	.then(() => console.log("Bien joué beau-gosse"))
 	.catch(() => console.log("Connexion à MongoDB échouée !"));
 
 app.use(express.json());
