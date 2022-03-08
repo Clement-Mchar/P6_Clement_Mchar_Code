@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 mongoose
 	.connect(
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 
 app.get(bodyParser.json);
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/stuff', stuffRoutes);
 app.use('/api/auth', userRoutes);
 
