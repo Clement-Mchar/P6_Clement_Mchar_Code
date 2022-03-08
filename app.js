@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 mongoose
 	.connect(
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.get(bodyParser.json);
 
 app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes);
 
 
 module.exports = app;
