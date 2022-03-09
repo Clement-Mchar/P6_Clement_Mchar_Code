@@ -1,4 +1,6 @@
 const express = require("express");
+const helmet = require("helmet");
+
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -10,12 +12,9 @@ const path = require("path");
 require("dotenv").config();
 
 mongoose
-	.connect(
-		process.env.DB_LINK,
-		{
-			useUnifiedTopology: true,
-		}
-	)
+	.connect(process.env.DB_LINK, {
+		useUnifiedTopology: true,
+	})
 	.then(() => console.log("Bien joué beau-gosse"))
 	.catch(() => console.log("Connexion à MongoDB échouée !"));
 
@@ -33,13 +32,17 @@ app.use((req, res, next) => {
 		"Access-Control-Allow-Methods",
 		"GET, POST, PUT, DELETE, PATCH, OPTIONS"
 	);
+
 	next();
 });
 
 app.get(bodyParser.json);
 
+
+
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
+app.use(helmet());
 
 module.exports = app;
