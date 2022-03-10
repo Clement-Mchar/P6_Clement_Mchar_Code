@@ -12,8 +12,7 @@ const normalizePort = (val) => {
 	}
 	return false;
 };
-const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
+
 
 const errorHandler = (error) => {
 	if (error.syscall !== "listen") {
@@ -45,4 +44,4 @@ server.on("listening", () => {
 	console.log("Listening on " + bind);
 });
 
-server.listen(port);
+server.listen(process.env.PORT || 5000);
