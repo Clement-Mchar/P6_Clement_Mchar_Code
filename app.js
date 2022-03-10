@@ -15,7 +15,7 @@ mongoose
 	.connect(process.env.DB_LINK, {
 		useUnifiedTopology: true,
 	})
-	.then(() => console.log("Bien joué beau-gosse"))
+	.then(() => console.log("Connexion à MongoDB réussie !"))
 	.catch(() => console.log("Connexion à MongoDB échouée !"));
 
 const app = express();
