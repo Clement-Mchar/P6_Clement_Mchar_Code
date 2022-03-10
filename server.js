@@ -13,6 +13,7 @@ const normalizePort = (val) => {
 	return false;
 };
 
+app.set("port", port);
 
 const errorHandler = (error) => {
 	if (error.syscall !== "listen") {
