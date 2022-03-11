@@ -1,7 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
 
-
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
@@ -38,11 +37,13 @@ app.use((req, res, next) => {
 
 app.get(bodyParser.json);
 
-
-
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
-app.use(helmet());
+app.use(
+	helmet({
+		contentSecurityPolicy: false,
+	})
+);
 
 module.exports = app;
