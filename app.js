@@ -41,9 +41,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 app.use(
-	helmet({
-		contentSecurityPolicy: false,
-	})
+	helmet()
 );
 
 module.exports = app;
