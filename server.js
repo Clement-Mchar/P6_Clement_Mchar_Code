@@ -1,6 +1,6 @@
 const http = require("http");
 const app = require("./app");
-
+const uri = process.env.MONGODB_URI;
 const normalizePort = (val) => {
 	const port = parseInt(val, 10);
 
