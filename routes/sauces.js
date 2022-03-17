@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+// on définit les points de contacts entre l'app et l'api grâce au routing
+
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
@@ -14,3 +16,5 @@ router.delete('/:id', auth, sauceCtrl.deleteSauce);
 router.post('/:id/like', auth, sauceCtrl.likeSauce);
 
 module.exports = router;
+
+// on spécifie les paths et on vérifie l'authentification pour chaque type de requête puis on exporte les routes

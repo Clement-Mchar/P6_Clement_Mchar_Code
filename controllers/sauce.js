@@ -2,6 +2,8 @@ const Sauce = require("../models/sauce");
 
 const fs = require("fs");
 
+// on récupère le modèle des sauces et on appelle fs pour interagir avec les fichiers
+
 exports.createSauce = (req, res, next) => {
 	const sauceObject = JSON.parse(req.body.sauce);
 	delete sauceObject._id;
@@ -17,9 +19,11 @@ exports.createSauce = (req, res, next) => {
 	});
 	sauce
 		.save()
-		.then(() => res.status(201).json({ message: "Sauce enregistrée" }))
+		.then(() => res.status(201).json({ message: "Sauce enregistrée !" }))
 		.catch((error) => res.status(400).json({ error }));
 };
+
+// on parse le corps de la requète, on créé la sauce, on la poste, on attrape l'erreur
 
 exports.getOneSauce = (req, res, next) => {
 	Sauce.findOne({
@@ -34,6 +38,7 @@ exports.getOneSauce = (req, res, next) => {
 			});
 		});
 };
+//  on récupère l'id, on récupère les infos de la sauce, on attrape l'erreur
 
 exports.modifySauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
@@ -57,6 +62,7 @@ exports.modifySauce = (req, res, next) => {
 		.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
 		.catch((error) => res.status(400).json({ error }));
 };
+// on récupère l'id, on modifie et on update les données de la sauce
 
 exports.deleteSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
@@ -71,6 +77,8 @@ exports.deleteSauce = (req, res, next) => {
 		.catch((error) => res.status(500).json({ error }));
 };
 
+// on trouve la sauce, on détache l'image, on supprime la sauce, on renvoi au back
+
 exports.getAllSauce = (req, res, next) => {
 	Sauce.find()
 		.then((sauces) => {
@@ -83,6 +91,8 @@ exports.getAllSauce = (req, res, next) => {
 		});
 };
 
+// on récupère et on affiche toutes les sauces
+
 exports.likeSauce = (req, res, next) => {
 	switch (req.body.like) {
 		case 1:
@@ -94,6 +104,8 @@ exports.likeSauce = (req, res, next) => {
 				.catch((error) => res.status(400).json({ error }));
 
 			break;
+
+// On récupère les données de la sauce, on incrémente le nombre de likes, on envoi au back 
 
 		case 0:
 			Sauce.findOne({ _id: req.params.id })
@@ -121,6 +133,9 @@ exports.likeSauce = (req, res, next) => {
 				.catch((error) => res.status(404).json({ error }));
 			break;
 
+// si l'utilisateur a déjà liké et qu'il l'enlève on enlève 1 like du compteur
+// si l'utilisateur a déjà disliké la sauce et qu'il l'enlève on enlève 1 dislike du compteur
+
 		case -1:
 			Sauce.updateOne(
 				{ _id: req.params.id },
@@ -136,3 +151,4 @@ exports.likeSauce = (req, res, next) => {
 			console.log(error);
 	}
 };
+// on récupère les données de la sauce et on rajoute un dislike au compteur

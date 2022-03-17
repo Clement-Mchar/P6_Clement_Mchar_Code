@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require ("jsonwebtoken")
 const User = require("../models/user");
 
+// on initialise bcrypt, jwt et on récupère le modèle user
+
 exports.signup = (req, res, next) => {
 	bcrypt
 		.hash(req.body.password, 10)
@@ -17,6 +19,9 @@ exports.signup = (req, res, next) => {
 		})
 		.catch((error) => res.status(500).json({ error }));
 };
+
+// on récupère et on crypte les infos entrées par l'user puis on créé l'user
+
 exports.login = (req, res, next) => {
 	User.findOne({ email: req.body.email })
 		.then((user) => {
@@ -42,3 +47,7 @@ exports.login = (req, res, next) => {
 		})
 		.catch((error) => res.status(500).json({ error }));
 };
+
+// on récupère les données entrées par l'user, on compare la compatibilité des infos entrées avec les données existantes
+// si les infos user entrées ne concordent pas avec les infos user existantes, on interdit la connexion
+// si les infos user entrées concordent avec les infos user existantes, on autorise la connexion
