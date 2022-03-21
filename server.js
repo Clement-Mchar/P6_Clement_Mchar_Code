@@ -2,7 +2,8 @@ const http = require("http");
 const app = require("./app");
 const uri = process.env.MONGODB_URI;
 
-// on appelle l'app et le .env(adresse du serveur), on indique le format de la requête et
+// on appelle le package http, l'app et l'URI
+
 const normalizePort = (val) => {
 	const port = parseInt(val, 10);
 

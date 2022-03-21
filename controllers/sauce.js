@@ -1,6 +1,7 @@
 const Sauce = require("../models/sauce");
 
 const fs = require("fs");
+const sauce = require( "../models/sauce" );
 
 // on récupère le modèle des sauces et on appelle fs pour interagir avec les fichiers
 
@@ -23,9 +24,12 @@ exports.createSauce = (req, res, next) => {
 		.catch((error) => res.status(400).json({ error }));
 };
 
-// on parse le corps de la requète, on créé la sauce, on la poste, on attrape l'erreur
+// on parse le corps de la requête, on créé la sauce, on la poste, on attrape l'erreur
 
 exports.getOneSauce = (req, res, next) => {
+	if (sauce.userId !== req.body.userId) {
+		return res.status(401).json({ message: "Unauthorized Request" });
+	}
 	Sauce.findOne({
 		_id: req.params.id,
 	})
@@ -37,10 +41,13 @@ exports.getOneSauce = (req, res, next) => {
 				error: error,
 			});
 		});
+
 };
+
 //  on récupère l'id, on récupère les infos de la sauce, on attrape l'erreur
 
 exports.modifySauce = (req, res, next) => {
+
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
 			const filename = sauce.imageUrl.split("/images/")[1];
@@ -62,6 +69,7 @@ exports.modifySauce = (req, res, next) => {
 		.then(() => res.status(200).json({ message: "Sauce modifiée !" }))
 		.catch((error) => res.status(400).json({ error }));
 };
+
 // on récupère l'id, on modifie et on update les données de la sauce
 
 exports.deleteSauce = (req, res, next) => {
@@ -105,7 +113,7 @@ exports.likeSauce = (req, res, next) => {
 
 			break;
 
-// On récupère les données de la sauce, on incrémente le nombre de likes, on envoi au back 
+		// On récupère les données de la sauce, on incrémente le nombre de likes, on envoi au back
 
 		case 0:
 			Sauce.findOne({ _id: req.params.id })
@@ -133,8 +141,8 @@ exports.likeSauce = (req, res, next) => {
 				.catch((error) => res.status(404).json({ error }));
 			break;
 
-// si l'utilisateur a déjà liké et qu'il l'enlève on enlève 1 like du compteur
-// si l'utilisateur a déjà disliké la sauce et qu'il l'enlève on enlève 1 dislike du compteur
+		// si l'utilisateur a déjà liké et qu'il l'enlève on enlève 1 like du compteur
+		// si l'utilisateur a déjà disliké la sauce et qu'il l'enlève on enlève 1 dislike du compteur
 
 		case -1:
 			Sauce.updateOne(

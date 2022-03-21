@@ -8,6 +8,7 @@ const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
 const path = require("path");
 
+
 // on appelle le framework, la sécurité, la bdd, le bodyParser et les routes de l'API
 
 require("dotenv").config();
@@ -37,7 +38,10 @@ app.use((req, res, next) => {
 		"Access-Control-Allow-Methods",
 		"GET, POST, PUT, DELETE, PATCH, OPTIONS"
 	);
-
+	res.setHeader(
+		"Cross-Origin-Resource-Policy",
+		"Cross-origin"
+	);
 	next();
 });
 

@@ -17,3 +17,4 @@ module.exports = (req, res, next) => {
 		});
 	}
 };
+// à chaque tentative de requête, on vérifie le token de l'utilisateur, puis, si il en a un et qu'il est différent, on invalide la requête 
