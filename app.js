@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 	);
 	res.setHeader(
 		"Cross-Origin-Resource-Policy",
-		"Cross-origin"
+		"cross-origin"
 	);
 	next();
 });

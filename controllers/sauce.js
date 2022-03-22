@@ -27,9 +27,6 @@ exports.createSauce = (req, res, next) => {
 // on parse le corps de la requête, on créé la sauce, on la poste, on attrape l'erreur
 
 exports.getOneSauce = (req, res, next) => {
-	if (sauce.userId !== req.body.userId) {
-		return res.status(401).json({ message: "Unauthorized Request" });
-	}
 	Sauce.findOne({
 		_id: req.params.id,
 	})
@@ -47,9 +44,12 @@ exports.getOneSauce = (req, res, next) => {
 //  on récupère l'id, on récupère les infos de la sauce, on attrape l'erreur
 
 exports.modifySauce = (req, res, next) => {
-
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
+			if (sauce.userId !== req.body.userId) {
+				return res.status(401).json({ message: "Unauthorized Request" });
+			}
+
 			const filename = sauce.imageUrl.split("/images/")[1];
 			fs.unlink(`images/${filename}`, () => {});
 		})
@@ -75,6 +75,10 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
+			if (sauce.userId !== req.body.userId) {
+				return res.status(401).json({ message: "Unauthorized Request" });
+			}
+			
 			const filename = sauce.imageUrl.split("/images/")[1];
 			fs.unlink(`images/${filename}`, () => {
 				Sauce.deleteOne({ _id: req.params.id })
